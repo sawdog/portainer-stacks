@@ -1,20 +1,21 @@
 version: '3.1'
-  services:
+volumes:
+  traefik-certs:
+services:
   proxy:
-    image: sawdog/traefik
+    image: sawdog/traefik:2.3.3
     ports:
-      - "80:80"
-      - "443:443"
-      - "8080:8080"
+     - "80:80"
+     - "443:443"
+     - "8080:8080"
     deploy:
-      mode: global
       placement:
         constraints:
           - "node.platform.os==linux"
           - "node.platform.architecture==i686"
           - "node.role==manager"
-      restart_policy:
-        condition: on-failure
+        restart_policy:
+          condition: on-failure
     networks:
       - traefik_net
     labels:
